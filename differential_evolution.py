@@ -13,13 +13,24 @@ Added by Andrew Nelson 2014
 from __future__ import division, print_function, absolute_import
 import numpy as np
 from scipy.optimize import OptimizeResult, minimize
-from scipy.optimize.optimize import _status_message
+# from scipy.optimize.optimize import _status_message
 from scipy._lib._util import check_random_state
-from scipy._lib.six import xrange, string_types
+from  six import  string_types
 import warnings
 
+from builtins import range
 
 __all__ = ['differential_evolution']
+_status_message = {'success': 'Optimization terminated successfully.',
+                   'maxfev': 'Maximum number of function evaluations has '
+                              'been exceeded.',
+                   'maxiter': 'Maximum number of iterations has been '
+                              'exceeded.',
+                   'pr_loss': 'Desired error not necessarily achieved due '
+                              'to precision loss.',
+                   'nan': 'NaN result encountered.',
+                   'out_of_bounds': 'The result is outside of the provided '
+                                    'bounds.'}
 
 _MACHEPS = np.finfo(np.float64).eps
 
@@ -563,7 +574,7 @@ class DifferentialEvolutionSolver(object):
             self._calculate_population_energies()
 
         # do the optimisation.
-        for nit in xrange(1, self.maxiter + 1):
+        for nit in range(1, self.maxiter + 1):
             # evolve the population by a generation
             try:
                 next(self)
